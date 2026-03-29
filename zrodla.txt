@@ -1,0 +1,24 @@
+Źródła i linki do bibliografii
+
+- RODO / GDPR — oficjalny tekst EUR-Lex
+  https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng
+
+- EDPB — Guidelines 4/2019 on Article 25 Data Protection by Design and by Default
+  https://www.edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-42019-article-25-data-protection-design-and_en
+
+- EDPB — PDF do Guidelines 4/2019
+  https://www.edpb.europa.eu/sites/default/files/files/file1/edpb_guidelines_201904_dataprotection_by_design_and_by_default_v2.0_en.pdf
+
+- ICO — Designing products that protect privacy
+  https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/designing-products-that-protect-privacy/
+
+- ICO — Privacy in the product design lifecycle
+  https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/designing-products-that-protect-privacy/privacy-in-the-product-design-lifecycle/
+
+- ICO — Data protection by design and by default
+  https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/guide-to-accountability-and-governance/data-protection-by-design-and-by-default/
+
+- NIST — Artificial Intelligence Risk Management Framework (AI RMF 1.0)
+  https://nvlpubs.nist.gov/nistpubs/ai/nist.ai.100-1.pdf
+
+
