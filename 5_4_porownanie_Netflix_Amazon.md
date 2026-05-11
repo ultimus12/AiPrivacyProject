@@ -1,25 +1,45 @@
 # 5.4. Wnioski porównawcze – Netflix i Amazon
 
-## 5.4.1. Cel porównania
+## Spis treści
 
-Celem porównania jest zestawienie dwóch różnych typów systemów rekomendacyjnych: platformy streamingowej Netflix oraz platformy e-commerce Amazon. Obie usługi wykorzystują dane użytkowników do personalizacji, ale robią to w innym kontekście biznesowym. Netflix rekomenduje głównie filmy, seriale i gry, natomiast Amazon rekomenduje produkty i usługi, które mogą prowadzić bezpośrednio do zakupu.
-
-Z punktu widzenia projektu najważniejsze jest sprawdzenie, jak oba systemy wypadają w kontekście ochrony prywatności, zasady privacy-by-design, privacy-by-default oraz podstawowych zasad RODO: minimalizacji danych, ograniczenia celu, przejrzystości i kontroli użytkownika.
+1. [Cel porównania](#541-cel-porownania)
+2. [Podstawowe podobieństwa](#542-podstawowe-podobienstwa)
+3. [Najważniejsze różnice](#543-najwazniejsze-roznice)
+4. [Porównanie pod kątem minimalizacji danych](#544-porownanie-pod-katem-minimalizacji-danych)
+5. [Porównanie pod kątem ograniczenia celu](#545-porownanie-pod-katem-ograniczenia-celu)
+6. [Porównanie pod kątem przejrzystości](#546-porownanie-pod-katem-przejrzystosci)
+7. [Porównanie pod kątem privacy-by-default](#547-porownanie-pod-katem-privacy-by-default)
+8. [Porównanie pod kątem bezpieczeństwa technicznego](#548-porownanie-pod-katem-bezpieczenstwa-technicznego)
+9. [Główne ryzyka prywatności](#549-glowne-ryzyka-prywatnosci)
+10. [Ocena końcowa](#5410-ocena-koncowa)
+11. [Syntetyczna ocena](#5411-syntetyczna-ocena)
+12. [Źródła wykorzystane w porównaniu](#zrodla-wykorzystane-w-porownaniu)
 
 ---
 
+<a id="541-cel-porownania"></a>
+## 5.4.1. Cel porównania
+
+Celem porównania jest zestawienie dwóch różnych typów systemów rekomendacyjnych: platformy streamingowej Netflix oraz platformy e-commerce Amazon. Obie usługi wykorzystują dane użytkowników do personalizacji, ale robią to w innym kontekście biznesowym. Netflix rekomenduje głównie filmy, seriale i gry, natomiast Amazon rekomenduje produkty i usługi, które mogą prowadzić bezpośrednio do zakupu.<sup><a href="#zrodlo-1">[1]</a></sup><sup><a href="#zrodlo-2">[2]</a></sup><sup><a href="#zrodlo-4">[4]</a></sup>
+
+Z punktu widzenia projektu najważniejsze jest sprawdzenie, jak oba systemy wypadają w kontekście ochrony prywatności, zasady privacy-by-design, privacy-by-default oraz podstawowych zasad RODO: minimalizacji danych, ograniczenia celu, przejrzystości i kontroli użytkownika.<sup><a href="#zrodlo-6">[6]</a></sup><sup><a href="#zrodlo-7">[7]</a></sup>
+
+---
+
+<a id="542-podstawowe-podobienstwa"></a>
 ## 5.4.2. Podstawowe podobieństwa
 
 Netflix i Amazon działają w różnych sektorach, ale ich systemy rekomendacyjne mają kilka wspólnych cech.
 
-Po pierwsze, oba systemy opierają się na profilowaniu użytkownika. Platformy analizują wcześniejsze zachowania, aby przewidywać, co użytkownik może chcieć obejrzeć albo kupić. W przypadku Netflixa są to głównie dane o oglądaniu, wyszukiwaniu i reakcjach na treści. W przypadku Amazona są to dane o przeglądaniu produktów, zakupach, wyszukiwaniach, aktywności w usługach powiązanych i interakcjach z reklamami.
+Po pierwsze, oba systemy opierają się na profilowaniu użytkownika. Platformy analizują wcześniejsze zachowania, aby przewidywać, co użytkownik może chcieć obejrzeć albo kupić. W przypadku Netflixa są to głównie dane o oglądaniu, wyszukiwaniu i reakcjach na treści.<sup><a href="#zrodlo-1">[1]</a></sup><sup><a href="#zrodlo-2">[2]</a></sup> W przypadku Amazona są to dane o przeglądaniu produktów, zakupach, wyszukiwaniach, aktywności w usługach powiązanych i interakcjach z reklamami.<sup><a href="#zrodlo-4">[4]</a></sup>
 
-Po drugie, w obu przypadkach personalizacja jest ważnym elementem modelu biznesowego. Netflix używa rekomendacji, aby użytkownik dłużej korzystał z platformy i łatwiej znajdował interesujące treści. Amazon używa rekomendacji, aby zwiększać prawdopodobieństwo zakupu, proponować produkty podobne lub uzupełniające oraz rozwijać sprzedaż i reklamę.
+Po drugie, w obu przypadkach personalizacja jest ważnym elementem modelu biznesowego. Netflix używa rekomendacji, aby użytkownik dłużej korzystał z platformy i łatwiej znajdował interesujące treści.<sup><a href="#zrodlo-2">[2]</a></sup> Amazon używa rekomendacji, aby zwiększać prawdopodobieństwo zakupu, proponować produkty podobne lub uzupełniające oraz rozwijać sprzedaż i reklamę.<sup><a href="#zrodlo-4">[4]</a></sup><sup><a href="#zrodlo-5">[5]</a></sup>
 
 Po trzecie, oba przypadki pokazują napięcie między skutecznością systemu AI a prywatnością. Im więcej danych platforma posiada o użytkowniku, tym dokładniejsze mogą być rekomendacje. Jednocześnie większy zakres danych oznacza większe ryzyko profilowania, nieprzejrzystości oraz wykorzystania danych w celach, których użytkownik może nie rozumieć.
 
 ---
 
+<a id="543-najwazniejsze-roznice"></a>
 ## 5.4.3. Najważniejsze różnice
 
 | Obszar porównania | Netflix | Amazon |
@@ -37,66 +57,72 @@ Po trzecie, oba przypadki pokazują napięcie między skutecznością systemu AI
 
 ---
 
+<a id="544-porownanie-pod-katem-minimalizacji-danych"></a>
 ## 5.4.4. Porównanie pod kątem minimalizacji danych
 
-Zasada minimalizacji danych oznacza, że platforma powinna zbierać tylko te dane, które są rzeczywiście potrzebne do konkretnego celu.
+Zasada minimalizacji danych oznacza, że platforma powinna zbierać tylko te dane, które są rzeczywiście potrzebne do konkretnego celu.<sup><a href="#zrodlo-6">[6]</a></sup>
 
-W przypadku Netflixa część danych jest dość łatwa do uzasadnienia. Jeśli platforma ma polecać filmy i seriale, musi znać historię oglądania, reakcje użytkownika i podstawowe informacje o profilu. Problem pojawia się wtedy, gdy zakres danych rozszerza się na reklamę, marketing, identyfikatory urządzeń, dane od partnerów i analizę zachowań poza samą funkcją rekomendacji.
+W przypadku Netflixa część danych jest dość łatwa do uzasadnienia. Jeśli platforma ma polecać filmy i seriale, musi znać historię oglądania, reakcje użytkownika i podstawowe informacje o profilu.<sup><a href="#zrodlo-1">[1]</a></sup><sup><a href="#zrodlo-2">[2]</a></sup> Problem pojawia się wtedy, gdy zakres danych rozszerza się na reklamę, marketing, identyfikatory urządzeń, dane od partnerów i analizę zachowań poza samą funkcją rekomendacji.<sup><a href="#zrodlo-1">[1]</a></sup><sup><a href="#zrodlo-3">[3]</a></sup>
 
-W przypadku Amazona problem minimalizacji jest większy. Amazon działa nie tylko jako sklep, ale jako rozbudowany ekosystem usług. Dane z zakupów, wyszukiwań, płatności, dostaw, urządzeń, reklam, Alexy, Kindle, Prime Video i innych usług mogą razem tworzyć bardzo szczegółowy profil użytkownika. Z tego powodu trudniej uznać, że wszystkie dane są niezbędne wyłącznie do podstawowej obsługi zakupów.
+W przypadku Amazona problem minimalizacji jest większy. Amazon działa nie tylko jako sklep, ale jako rozbudowany ekosystem usług.<sup><a href="#zrodlo-4">[4]</a></sup> Dane z zakupów, wyszukiwań, płatności, dostaw, urządzeń, reklam, Alexy, Kindle, Prime Video i innych usług mogą razem tworzyć bardzo szczegółowy profil użytkownika. Z tego powodu trudniej uznać, że wszystkie dane są niezbędne wyłącznie do podstawowej obsługi zakupów.
 
 **Wniosek:** Netflix zbiera dużo danych, ale ich część jest bezpośrednio związana ze streamingiem. Amazon zbiera dane z większej liczby źródeł, dlatego ryzyko naruszenia zasady minimalizacji jest wyraźnie większe.
 
 ---
 
+<a id="545-porownanie-pod-katem-ograniczenia-celu"></a>
 ## 5.4.5. Porównanie pod kątem ograniczenia celu
 
-Zasada ograniczenia celu oznacza, że dane powinny być zbierane w konkretnym, jasno określonym celu i nie powinny być później używane w zupełnie innym celu bez odpowiedniego uzasadnienia i poinformowania użytkownika.
+Zasada ograniczenia celu oznacza, że dane powinny być zbierane w konkretnym, jasno określonym celu i nie powinny być później używane w zupełnie innym celu bez odpowiedniego uzasadnienia i poinformowania użytkownika.<sup><a href="#zrodlo-6">[6]</a></sup>
 
-W przypadku Netflixa podstawowym celem jest świadczenie usługi streamingowej. Do tego celu można zaliczyć obsługę konta, odtwarzanie treści, zapamiętywanie historii oglądania i personalizację rekomendacji. Wątpliwości pojawiają się przy reklamach, marketingu, analityce i technologiach śledzących. Użytkownik powinien wyraźnie rozumieć, które dane są używane do rekomendacji filmów, a które do reklam.
+W przypadku Netflixa podstawowym celem jest świadczenie usługi streamingowej. Do tego celu można zaliczyć obsługę konta, odtwarzanie treści, zapamiętywanie historii oglądania i personalizację rekomendacji.<sup><a href="#zrodlo-1">[1]</a></sup><sup><a href="#zrodlo-2">[2]</a></sup> Wątpliwości pojawiają się przy reklamach, marketingu, analityce i technologiach śledzących.<sup><a href="#zrodlo-3">[3]</a></sup> Użytkownik powinien wyraźnie rozumieć, które dane są używane do rekomendacji filmów, a które do reklam.
 
-W przypadku Amazona ograniczenie celu jest jeszcze trudniejsze do oceny. Dane zebrane przy zakupach mogą być używane nie tylko do realizacji transakcji, ale również do rekomendacji, reklamy behawioralnej, analityki, promocji i działań w usługach partnerskich. Szczególnie problematyczny jest obszar Amazon DSP, czyli wykorzystanie danych do reklam poza samą platformą Amazon.
+W przypadku Amazona ograniczenie celu jest jeszcze trudniejsze do oceny. Dane zebrane przy zakupach mogą być używane nie tylko do realizacji transakcji, ale również do rekomendacji, reklamy behawioralnej, analityki, promocji i działań w usługach partnerskich. Szczególnie problematyczny jest obszar Amazon DSP, czyli wykorzystanie danych do reklam poza samą platformą Amazon.<sup><a href="#zrodlo-5">[5]</a></sup>
 
 **Wniosek:** W obu przypadkach istnieje ryzyko rozmycia celu przetwarzania, ale w Amazonie jest ono większe, bo dane zakupowe i behawioralne są mocniej powiązane z reklamą oraz całym ekosystemem usług.
 
 ---
 
+<a id="546-porownanie-pod-katem-przejrzystosci"></a>
 ## 5.4.6. Porównanie pod kątem przejrzystości
 
-Przejrzystość oznacza, że użytkownik powinien wiedzieć, jakie dane są zbierane, po co są używane i jak wpływają na rekomendacje.
+Przejrzystość oznacza, że użytkownik powinien wiedzieć, jakie dane są zbierane, po co są używane i jak wpływają na rekomendacje.<sup><a href="#zrodlo-6">[6]</a></sup>
 
-Netflix wypada w tym obszarze stosunkowo dobrze, ponieważ publicznie wyjaśnia podstawowe zasady działania systemu rekomendacyjnego. Użytkownik może dowiedzieć się, że znaczenie mają m.in. historia oglądania, oceny, podobieństwo do innych użytkowników, cechy tytułów, pora oglądania i typ urządzenia. Nadal jednak użytkownik nie widzi dokładnie, dlaczego konkretny film został mu polecony i jakie cechy profilu zostały mu przypisane.
+Netflix wypada w tym obszarze stosunkowo dobrze, ponieważ publicznie wyjaśnia podstawowe zasady działania systemu rekomendacyjnego.<sup><a href="#zrodlo-2">[2]</a></sup> Użytkownik może dowiedzieć się, że znaczenie mają m.in. historia oglądania, oceny, podobieństwo do innych użytkowników, cechy tytułów, pora oglądania i typ urządzenia. Nadal jednak użytkownik nie widzi dokładnie, dlaczego konkretny film został mu polecony i jakie cechy profilu zostały mu przypisane.
 
-Amazon również informuje o przetwarzaniu danych, ale jego ekosystem jest znacznie bardziej złożony. Przeciętnemu użytkownikowi trudniej zrozumieć, jak dane z zakupów, przeglądania, reklam, Alexy, Prime Video czy partnerów są ze sobą łączone. Sama dostępność polityki prywatności nie oznacza jeszcze, że użytkownik realnie rozumie działanie systemu.
+Amazon również informuje o przetwarzaniu danych, ale jego ekosystem jest znacznie bardziej złożony.<sup><a href="#zrodlo-4">[4]</a></sup> Przeciętnemu użytkownikowi trudniej zrozumieć, jak dane z zakupów, przeglądania, reklam, Alexy, Prime Video czy partnerów są ze sobą łączone. Sama dostępność polityki prywatności nie oznacza jeszcze, że użytkownik realnie rozumie działanie systemu.
 
 **Wniosek:** Netflix jest bardziej przejrzysty w opisie samej logiki rekomendacji. Amazon jest mniej czytelny dla przeciętnego użytkownika, ponieważ działa w większym i bardziej złożonym ekosystemie danych.
 
 ---
 
+<a id="547-porownanie-pod-katem-privacy-by-default"></a>
 ## 5.4.7. Porównanie pod kątem privacy-by-default
 
-Privacy-by-default oznacza, że domyślne ustawienia usługi powinny chronić prywatność użytkownika, a nie wymagać od niego samodzielnego wyłączania nadmiarowego przetwarzania.
+Privacy-by-default oznacza, że domyślne ustawienia usługi powinny chronić prywatność użytkownika, a nie wymagać od niego samodzielnego wyłączania nadmiarowego przetwarzania.<sup><a href="#zrodlo-7">[7]</a></sup>
 
-W przypadku Netflixa domyślna personalizacja jest częścią działania usługi. Nie jest to całkowicie negatywne, bo rekomendacje są jedną z podstawowych funkcji platformy. Problem polega jednak na tym, że użytkownik musi samodzielnie szukać ustawień związanych z prywatnością, reklamami, historią oglądania lub kontrolą profilu.
+W przypadku Netflixa domyślna personalizacja jest częścią działania usługi. Nie jest to całkowicie negatywne, bo rekomendacje są jedną z podstawowych funkcji platformy. Problem polega jednak na tym, że użytkownik musi samodzielnie szukać ustawień związanych z prywatnością, reklamami, historią oglądania lub kontrolą profilu.<sup><a href="#zrodlo-1">[1]</a></sup><sup><a href="#zrodlo-3">[3]</a></sup>
 
-W przypadku Amazona privacy-by-default budzi większe wątpliwości. Domyślne działanie platformy jest mocno nastawione na personalizację, rekomendacje i reklamę. Użytkownik, który nie zmieni ustawień, podlega szerokiemu profilowaniu w wielu usługach i kanałach.
+W przypadku Amazona privacy-by-default budzi większe wątpliwości.<sup><a href="#zrodlo-4">[4]</a></sup><sup><a href="#zrodlo-5">[5]</a></sup> Domyślne działanie platformy jest mocno nastawione na personalizację, rekomendacje i reklamę. Użytkownik, który nie zmieni ustawień, podlega szerokiemu profilowaniu w wielu usługach i kanałach.
 
 **Wniosek:** Obie platformy powinny mocniej rozwijać domyślne ustawienia przyjazne prywatności. Większy problem występuje jednak w Amazonie, ponieważ domyślne profilowanie obejmuje więcej celów i źródeł danych.
 
 ---
 
+<a id="548-porownanie-pod-katem-bezpieczenstwa-technicznego"></a>
 ## 5.4.8. Porównanie pod kątem bezpieczeństwa technicznego
 
-Bezpieczeństwo techniczne oznacza ochronę danych przed nieuprawnionym dostępem, wyciekiem lub przejęciem konta. W obu przypadkach platformy deklarują stosowanie środków bezpieczeństwa, takich jak ochrona konta, szyfrowanie, zarządzanie urządzeniami i mechanizmy wykrywania nadużyć.
+Bezpieczeństwo techniczne oznacza ochronę danych przed nieuprawnionym dostępem, wyciekiem lub przejęciem konta.<sup><a href="#zrodlo-6">[6]</a></sup> W obu przypadkach platformy deklarują stosowanie środków bezpieczeństwa, takich jak ochrona konta, szyfrowanie, zarządzanie urządzeniami i mechanizmy wykrywania nadużyć.
 
-Netflix daje użytkownikowi narzędzia takie jak zarządzanie urządzeniami, zmiana hasła, wylogowanie urządzeń, kontrola profili i ustawienia rodzicielskie. Są to ważne mechanizmy, ponieważ historia oglądania może ujawniać prywatne zainteresowania użytkownika.
+Netflix daje użytkownikowi narzędzia takie jak zarządzanie urządzeniami, zmiana hasła, wylogowanie urządzeń, kontrola profili i ustawienia rodzicielskie.<sup><a href="#zrodlo-1">[1]</a></sup> Są to ważne mechanizmy, ponieważ historia oglądania może ujawniać prywatne zainteresowania użytkownika.
 
-Amazon stosuje rozbudowane mechanizmy bezpieczeństwa, ponieważ przetwarza dane transakcyjne, płatnicze, adresowe i dane sprzedawców. Ryzyko skutków naruszenia jest jednak większe, bo wyciek danych Amazona mógłby obejmować nie tylko zainteresowania użytkownika, ale również dane finansowe, adresowe i zakupowe.
+Amazon stosuje rozbudowane mechanizmy bezpieczeństwa, ponieważ przetwarza dane transakcyjne, płatnicze, adresowe i dane sprzedawców.<sup><a href="#zrodlo-4">[4]</a></sup> Ryzyko skutków naruszenia jest jednak większe, bo wyciek danych Amazona mógłby obejmować nie tylko zainteresowania użytkownika, ale również dane finansowe, adresowe i zakupowe.
 
 **Wniosek:** Obie platformy mają rozwinięte zabezpieczenia techniczne, ale samo bezpieczeństwo nie oznacza jeszcze pełnej zgodności z privacy-by-design. Platforma może dobrze chronić dane przed włamaniem, a jednocześnie zbierać ich zbyt dużo lub wykorzystywać je do zbyt wielu celów.
 
 ---
 
+<a id="549-glowne-ryzyka-prywatnosci"></a>
 ## 5.4.9. Główne ryzyka prywatności
 
 ### Netflix
@@ -122,19 +148,20 @@ Najważniejsze ryzyka w przypadku Amazona to:
 
 ---
 
+<a id="5410-ocena-koncowa"></a>
 ## 5.4.10. Ocena końcowa
 
 Porównanie Netflixa i Amazona pokazuje, że systemy rekomendacyjne mogą generować różne poziomy ryzyka w zależności od rodzaju platformy i zakresu danych.
 
-Netflix jest przykładem platformy, w której rekomendacje są mocno powiązane z główną usługą. Użytkownik płaci za dostęp do treści, a personalizacja pomaga mu znaleźć filmy i seriale. Ryzyko prywatności polega głównie na tym, że historia oglądania i zachowania w aplikacji mogą tworzyć szczegółowy profil użytkownika. Dodatkowe wątpliwości pojawiają się przy reklamach i współpracy z partnerami.
+Netflix jest przykładem platformy, w której rekomendacje są mocno powiązane z główną usługą.<sup><a href="#zrodlo-1">[1]</a></sup><sup><a href="#zrodlo-2">[2]</a></sup> Użytkownik płaci za dostęp do treści, a personalizacja pomaga mu znaleźć filmy i seriale. Ryzyko prywatności polega głównie na tym, że historia oglądania i zachowania w aplikacji mogą tworzyć szczegółowy profil użytkownika. Dodatkowe wątpliwości pojawiają się przy reklamach i współpracy z partnerami.
 
-Amazon jest przykładem platformy o wyższym poziomie ryzyka prywatności. Wynika to z tego, że rekomendacje są powiązane z zakupami, płatnościami, reklamą, dostawami i wieloma usługami dodatkowymi. Amazon może łączyć dane z różnych obszarów życia użytkownika, a rekomendacje mogą wpływać bezpośrednio na decyzje finansowe.
+Amazon jest przykładem platformy o wyższym poziomie ryzyka prywatności.<sup><a href="#zrodlo-4">[4]</a></sup><sup><a href="#zrodlo-5">[5]</a></sup> Wynika to z tego, że rekomendacje są powiązane z zakupami, płatnościami, reklamą, dostawami i wieloma usługami dodatkowymi. Amazon może łączyć dane z różnych obszarów życia użytkownika, a rekomendacje mogą wpływać bezpośrednio na decyzje finansowe.
 
-Najważniejszy wspólny wniosek jest taki, że privacy-by-design nie może oznaczać tylko zabezpieczenia danych przed wyciekiem. Musi obejmować także ograniczenie ilości zbieranych danych, jasne określenie celu przetwarzania, proste ustawienia prywatności, kontrolę użytkownika i przejrzyste wyjaśnienie działania rekomendacji.
+Najważniejszy wspólny wniosek jest taki, że privacy-by-design nie może oznaczać tylko zabezpieczenia danych przed wyciekiem.<sup><a href="#zrodlo-7">[7]</a></sup> Musi obejmować także ograniczenie ilości zbieranych danych, jasne określenie celu przetwarzania, proste ustawienia prywatności, kontrolę użytkownika i przejrzyste wyjaśnienie działania rekomendacji.
 
 ---
----
 
+<a id="5411-syntetyczna-ocena"></a>
 ## 5.4.11. Syntetyczna ocena
 
 | Kryterium | Netflix | Amazon | Który przypadek jest bardziej ryzykowny? |
@@ -147,16 +174,37 @@ Najważniejszy wspólny wniosek jest taki, że privacy-by-design nie może oznac
 | Profilowanie behawioralne | Wysokie w zakresie oglądania | Bardzo wysokie w zakresie zakupów i usług | Amazon |
 | Wpływ na użytkownika | Wybór treści i czas korzystania | Decyzje zakupowe, reklamy i wydatki | Amazon |
 
-**Ogólna konkluzja:** Netflix i Amazon pokazują, że systemy rekomendacyjne są użyteczne, ale wymagają ostrożnego projektowania. Netflix jest mniej ryzykowny, ponieważ działa głównie w kontekście treści streamingowych. Amazon jest bardziej ryzykowny, ponieważ łączy rekomendacje z zakupami, płatnościami, reklamą i wieloma usługami dodatkowymi. W obu przypadkach najważniejsze jest to, aby personalizacja była przejrzysta, ograniczona do potrzebnego celu i możliwa do kontrolowania przez użytkownika.
+**Ogólna konkluzja:** Netflix i Amazon pokazują, że systemy rekomendacyjne są użyteczne, ale wymagają ostrożnego projektowania.<sup><a href="#zrodlo-6">[6]</a></sup><sup><a href="#zrodlo-7">[7]</a></sup> Netflix jest mniej ryzykowny, ponieważ działa głównie w kontekście treści streamingowych. Amazon jest bardziej ryzykowny, ponieważ łączy rekomendacje z zakupami, płatnościami, reklamą i wieloma usługami dodatkowymi. W obu przypadkach najważniejsze jest to, aby personalizacja była przejrzysta, ograniczona do potrzebnego celu i możliwa do kontrolowania przez użytkownika.
 
 ---
 
+<a id="zrodla-wykorzystane-w-porownaniu"></a>
 ## Źródła wykorzystane w porównaniu
 
-- Netflix, *Privacy Statement*, https://help.netflix.com/legal/privacy
-- Netflix Help Center, *How Netflix’s Recommendations System Works*, https://help.netflix.com/en/node/100639
-- Netflix Help Center, *How to stop certain uses of your personal information*, https://help.netflix.com/en/node/100637
-- Amazon, *Amazon.com Privacy Notice*, https://www.amazon.com/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ
-- Amazon Ads, *Amazon DSP*, https://advertising.amazon.com/solutions/products/amazon-dsp
-- Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2016/679, RODO/GDPR, https://eur-lex.europa.eu/eli/reg/2016/679/oj
-- European Data Protection Board, *Guidelines 4/2019 on Article 25 Data Protection by Design and by Default*.
+<a id="zrodlo-1"></a>**[1] Netflix, _Privacy Statement_**  
+https://help.netflix.com/legal/privacy  
+Zakres wykorzystania: opis kategorii danych przetwarzanych przez Netflix, celów przetwarzania, danych reklamowych, ustawień prywatności oraz ogólnych mechanizmów kontroli użytkownika.
+
+<a id="zrodlo-2"></a>**[2] Netflix Help Center, _How Netflix’s Recommendations System Works_**  
+https://help.netflix.com/en/node/100639  
+Zakres wykorzystania: opis działania systemu rekomendacyjnego Netflixa, sygnałów branych pod uwagę przez algorytm oraz roli personalizacji w usłudze streamingowej.
+
+<a id="zrodlo-3"></a>**[3] Netflix Help Center, _How to stop certain uses of your personal information_**  
+https://help.netflix.com/en/node/100637  
+Zakres wykorzystania: informacje o ograniczaniu wybranych sposobów używania danych osobowych, zwłaszcza w kontekście reklam, marketingu i technologii śledzących.
+
+<a id="zrodlo-4"></a>**[4] Amazon, _Amazon.com Privacy Notice_**  
+https://www.amazon.com/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ  
+Zakres wykorzystania: opis danych zbieranych przez Amazon, celów przetwarzania, danych z usług powiązanych oraz ogólnego zakresu ekosystemu danych Amazona.
+
+<a id="zrodlo-5"></a>**[5] Amazon Ads, _Amazon DSP_**  
+https://advertising.amazon.com/solutions/products/amazon-dsp  
+Zakres wykorzystania: opis mechanizmu reklamowego Amazon DSP oraz wykorzystania danych i reklamy behawioralnej poza samą platformą zakupową.
+
+<a id="zrodlo-6"></a>**[6] Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2016/679 — RODO/GDPR**  
+https://eur-lex.europa.eu/eli/reg/2016/679/oj  
+Zakres wykorzystania: podstawa prawna analizy, zwłaszcza zasady minimalizacji danych, ograniczenia celu, przejrzystości, bezpieczeństwa oraz kontroli użytkownika nad danymi.
+
+<a id="zrodlo-7"></a>**[7] European Data Protection Board, _Guidelines 4/2019 on Article 25 Data Protection by Design and by Default_**  
+https://www.edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-42019-article-25-data-protection-design-and_en  
+Zakres wykorzystania: interpretacja zasad privacy-by-design i privacy-by-default oraz ich znaczenia dla projektowania systemów rekomendacyjnych.
