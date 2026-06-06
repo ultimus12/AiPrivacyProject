@@ -1,0 +1,587 @@
+\documentclass[12pt, a4paper]{article}
+
+% --- Kodowanie i język ---
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+
+% --- Czcionki ---
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% --- Marginesy ---
+\usepackage[top=2.5cm, bottom=2.5cm, left=3cm, right=2.5cm]{geometry}
+
+% --- Nagłówki i stopki ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Prywatność i Ochrona Danych Osobowych}
+\fancyhead[R]{\small AI i Systemy Rekomendacyjne}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% --- Tabele ---
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+
+% --- Kolory i ramki ---
+\usepackage[table]{xcolor}
+\definecolor{rowgray}{gray}{0.93}
+\definecolor{headerblue}{RGB}{30, 70, 120}
+\definecolor{accentblue}{RGB}{60, 120, 200}
+\definecolor{lightblue}{RGB}{220, 235, 250}
+
+% --- Hiperłącza ---
+\usepackage[hidelinks, unicode]{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=headerblue,
+  urlcolor=accentblue,
+  citecolor=headerblue
+}
+
+% --- Grafika i layout ---
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{abstract}
+\usepackage{caption}
+
+% --- Formatowanie sekcji ---
+\titleformat{\section}
+  {\large\bfseries\color{headerblue}}
+  {\thesection.}{0.6em}{}[\vspace{-4pt}\rule{\linewidth}{0.4pt}\vspace{2pt}]
+
+\titleformat{\subsection}
+  {\normalsize\bfseries\color{headerblue!80!black}}
+  {\thesubsection.}{0.5em}{}
+
+\titleformat{\subsubsection}
+  {\normalsize\itshape\bfseries}
+  {\thesubsubsection.}{0.5em}{}
+
+% --- Odstępy ---
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0.3em}
+\usepackage{setspace}
+\onehalfspacing
+
+% --- Cytowania (thebibliography) ---
+
+% --- Ramka na stronę tytułową ---
+\usepackage{mdframed}
+
+% =========================================================
+\begin{document}
+
+% =========================================================
+%  STRONA TYTUŁOWA
+% =========================================================
+\begin{titlepage}
+  \centering
+  \vspace*{1.5cm}
+
+  {\large\bfseries Projekt semestralny}\\[0.4cm]
+  {\small Przedmiot: Prywatność i Ochrona Danych Osobowych}\\[2cm]
+
+  \begin{mdframed}[linewidth=1.5pt, linecolor=headerblue,
+    topline=true, bottomline=true, leftline=true, rightline=true,
+    innertopmargin=16pt, innerbottommargin=16pt,
+    innerrightmargin=20pt, innerleftmargin=20pt]
+    \centering
+    {\LARGE\bfseries\color{headerblue}
+    Sztuczna inteligencja i systemy rekomendacyjne\\[0.4cm]
+    a ochrona danych osobowych\\[0.3cm]}
+    {\large Analiza przypadków Netflix, Instagram i Amazon\\
+    w świetle wymogów RODO i zasady privacy-by-design}
+  \end{mdframed}
+
+  \vspace{2cm}
+
+  {\normalsize Raport końcowy projektu}\\[0.3cm]
+
+  \vfill
+  {\small \today}
+\end{titlepage}
+
+% =========================================================
+%  SPIS TREŚCI
+% =========================================================
+\tableofcontents
+\newpage
+
+% =========================================================
+%  STRESZCZENIE
+% =========================================================
+\begin{abstract}
+\noindent
+Niniejszy raport stanowi końcowe podsumowanie projektu semestralnego poświęconego zagadnieniu sztucznej inteligencji i systemów rekomendacyjnych w kontekście ochrony danych osobowych. W pierwszej części omówiono kluczowe pojęcia teoretyczne: definicję i architekturę systemów rekomendacyjnych opartych na AI (AIRS), taksonomię zagrożeń prywatności oraz ramy prawne wynikające z RODO i zasady privacy-by-design. Następnie przeprowadzono szczegółową analizę trzech studiów przypadku: platformy streamingowej Netflix, platformy społecznościowej Instagram oraz platformy e-commerce Amazon. W kolejnej części dokonano komparatywnego zestawienia wszystkich trzech platform w zakresie minimalizacji danych, ograniczenia celu, przejrzystości, domyślnej ochrony prywatności i bezpieczeństwa technicznego. Raport kończy się wnioskami wskazującymi na systemowe napięcie między logiką maksymalizacji personalizacji a wymogami prawa ochrony danych.
+\end{abstract}
+\vspace{1em}
+\hrule
+\newpage
+
+% =========================================================
+%  CZĘŚĆ I – ZAGADNIENIA TEORETYCZNE
+% =========================================================
+\section{Zagadnienia teoretyczne: AI, systemy rekomendacyjne i prywatność}
+
+\subsection{Systemy rekomendacyjne oparte na sztucznej inteligencji (AIRS)}
+
+Systemy rekomendacyjne oparte na sztucznej inteligencji (ang.\ \textit{AI-based Recommender Systems}, AIRS) stanowią kluczowy element infrastruktury większości współczesnych platform cyfrowych. Ich podstawowym zadaniem jest przewidywanie, które produkty, treści, osoby lub usługi mogą zainteresować konkretnego użytkownika, oraz prezentowanie ich w sposób zwiększający prawdopodobieństwo interakcji lub zakupu.
+
+Z technicznego punktu widzenia AIRS mogą być klasyfikowane według kilku głównych paradygmatów. \textbf{Rekomendacje oparte na podobieństwie użytkowników} (\textit{collaborative filtering}) polegają na identyfikowaniu zbliżonych wzorców zachowania wśród różnych osób -- jeśli użytkownicy A i~B oglądali podobne treści, system zakłada, że treści lubiane przez A mogą spodobać się B. \textbf{Rekomendacje oparte na zawartości} (\textit{content-based filtering}) analizują cechy samych rekomendowanych elementów (gatunek, styl, atrybuty produktu) i dopasowują je do udokumentowanych preferencji użytkownika. \textbf{Modele hybrydowe} łączą oba podejścia, a najnowocześniejsze implementacje opierają się na głębokim uczeniu maszynowym i reprezentacjach wektorowych (\textit{embeddings}), pozwalając na uwzględnienie kontekstu, sekwencyjności zachowań i danych multimodalnych.
+
+Efektywność AIRS jest ściśle uzależniona od ilości i jakości danych o użytkownikach. Im więcej sygnałów behawioralnych platforma posiada, tym precyzyjniejsze mogą być jej predykcje. Ta fundamentalna zależność tworzy strukturalne napięcie z zasadami ochrony danych osobowych, w szczególności z zasadą minimalizacji danych i ograniczenia celu.
+
+\subsection{Taksonomia zagrożeń prywatności w systemach AIRS}
+
+W literaturze przedmiotu wyróżnia się kilka kategorii zagrożeń prywatności specyficznych dla systemów rekomendacyjnych. Na podstawie badań jakościowych i ilościowych z udziałem ponad 580 użytkowników platform e-commerce zidentyfikowano trzy kluczowe grupy zagrożeń \cite{chen2025}:
+
+\begin{description}[leftmargin=1.5em, style=nextline]
+  \item[Poczucie bycia obserwowanym (\textit{perceived surveillance})]
+    Użytkownicy odbierają rekomendacje jako dowód stałego nadzoru nad ich zachowaniem. Wzbudza to dyskomfort, szczególnie gdy rekomendacje wydają się wyprzedzać deklarowane potrzeby -- system „wie", czego użytkownik może zapragnąć, zanim sam to uświadomi.
+  \item[Zagrożenie kradzieżą tożsamości (\textit{perceived identity theft})]
+    Systemy AIRS przetwarzają i łączą dane identyfikacyjne z danymi behawioralnymi. W przypadku naruszenia bezpieczeństwa lub nieautoryzowanego dostępu taki profil może umożliwić nieuprawnionym podmiotom podszywanie się pod ofiarę lub popełnianie przestępstw na jej szkodę.
+  \item[Nieuprawnione wtórne wykorzystanie danych (\textit{perceived unauthorized secondary use})]
+    Dane zebrane w jednym celu (np.\ obsługa transakcji zakupowej, personalizacja treści) mogą być następnie wykorzystywane w celach, na które użytkownik nie wyraził świadomej i odrębnej zgody -- reklamie behawioralnej, profilowaniu dla podmiotów trzecich, trenowaniu modeli AI.
+\end{description}
+
+W literaturze wskazuje się również na zagrożenia od strony technicznej \cite{himeur2022}: ataki wstrzykiwania fałszywych profili (\textit{shilling attacks}), zatrucie danych treningowych (\textit{data poisoning}) oraz ryzyko reidentyfikacji pozornie zanonimizowanych zbiorów danych behawioralnych. Ten ostatni problem ilustruje klasyczny przykład konkursu Netflix Prize z 2006~r., gdzie dowiedziono możliwości deanonimizacji zanonimizowanej bazy ocen filmów przy użyciu publicznych danych z serwisu IMDb \cite{narayanan2008}.
+
+\subsection{Ramy prawne: RODO i zasada privacy-by-design}
+
+Ogólne Rozporządzenie o Ochronie Danych (RODO, Rozporządzenie UE 2016/679) ustanawia zasady, które mają bezpośrednie znaczenie dla oceny systemów AIRS:
+
+\begin{itemize}
+  \item \textbf{Zasada legalności, rzetelności i przejrzystości} (art.~5 ust.~1 lit.~a) -- dane muszą być przetwarzane w sposób rzetelny i transparentny dla osoby, której dotyczą. W kontekście systemów rekomendacyjnych oznacza to obowiązek zrozumiałego informowania użytkownika o tym, jak jego dane wpływają na prezentowane mu treści i oferty.
+  \item \textbf{Zasada ograniczenia celu} (art.~5 ust.~1 lit.~b) -- dane muszą być zbierane w konkretnych, wyraźnych i prawnie uzasadnionych celach oraz nie mogą być przetwarzane w sposób niezgodny z tymi celami. Personalizacja reklam prowadzona na podstawie danych zebranych pierwotnie w celu świadczenia usługi streamingowej lub realizacji transakcji zakupowej rodzi zasadnicze wątpliwości co do zgodności z tą zasadą.
+  \item \textbf{Zasada minimalizacji danych} (art.~5 ust.~1 lit.~c) -- przetwarzane dane muszą być adekwatne, stosowne i ograniczone do minimum niezbędnego do realizacji celów. Zasada ta pozostaje w bezpośrednim napięciu z logiką AIRS, które działają tym precyzyjniej, im więcej danych otrzymują.
+  \item \textbf{Zasada ograniczenia przechowywania} (art.~5 ust.~1 lit.~e) -- dane nie powinny być przechowywane dłużej, niż jest to konieczne do realizacji celów.
+  \item \textbf{Zasada integralności i poufności} (art.~5 ust.~1 lit.~f) -- dane muszą być chronione przed nieuprawnionym dostępem i utratą.
+\end{itemize}
+
+Artykuł 25 RODO wprowadza koncepcję \textbf{ochrony danych w fazie projektowania i ochrony danych jako ustawienia domyślnego} (\textit{privacy-by-design} i \textit{privacy-by-default}). Zgodnie z wytycznymi Europejskiej Rady Ochrony Danych (EDPB) z 2019~r.\ (Guidelines 4/2019 on Article 25) zasada ta wymaga, aby ochrona prywatności była uwzględniana już na etapie projektowania systemu, nie dopiero po jego wdrożeniu. Privacy-by-default oznacza ponadto, że domyślne ustawienia usługi powinny ograniczać zakres przetwarzania do niezbędnego minimum -- użytkownik nie powinien musieć aktywnie wyłączać nadmiarowego profilowania.
+
+Artykuły 15--22 RODO gwarantują podmiotom danych prawa dostępu, sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia, sprzeciwu oraz prawo do niepodlegania decyzji opartej wyłącznie na zautomatyzowanym przetwarzaniu (art.~22). To ostatnie prawo ma szczególne znaczenie w kontekście systemów AIRS, które automatycznie profilują użytkowników i na podstawie tego profilowania decydują o treściach, ofertach lub reklamach im prezentowanych.
+
+Uzupełnieniem ram prawnych jest Akt o Usługach Cyfrowych (DSA, Rozporządzenie UE 2022/2065), który wprowadza dla bardzo dużych platform internetowych szczegółowe obowiązki w zakresie przejrzystości systemów rekomendacyjnych. Art.~27 DSA zobowiązuje platformy do informowania użytkowników o głównych parametrach systemów rankingowych, a art.~38 DSA wymaga od bardzo dużych platform oferowania co najmniej jednej opcji rekomendacji nieopartej na profilowaniu.
+
+\subsection{Pojęcie profilowania i jego znaczenie dla ochrony prywatności}
+
+Profilowanie, zdefiniowane w art.~4 pkt~4 RODO jako forma zautomatyzowanego przetwarzania polegająca na ocenie czynników osobowych (zachowań, zainteresowań, lokalizacji, zdrowia, sytuacji ekonomicznej), jest centralnym mechanizmem działania AIRS. Z perspektywy ochrony danych profilowanie rodzi specyficzne ryzyka:
+
+\begin{itemize}
+  \item \textbf{Inferencja danych wrażliwych} -- nawet jeśli użytkownik nie ujawnia wprost informacji o stanie zdrowia, orientacji seksualnej, poglądach politycznych czy przekonaniach religijnych, jego wzorce zachowania mogą umożliwiać statystyczne wnioskowanie o tych cechach. Historia oglądania, zakupów lub interakcji na platformie społecznościowej może tworzyć profil ujawniający dane szczególnej kategorii w rozumieniu art.~9 RODO.
+  \item \textbf{Efekt bańki informacyjnej} -- algorytmiczne wzmacnianie treści zgodnych z dotychczasowymi zachowaniami może ograniczać ekspozycję użytkownika na odmienne perspektywy, treści neutralne lub sprzeczne z jego dotychczasowym profilem.
+  \item \textbf{Nieprzejrzystość decyzyjna} -- użytkownik rzadko dysponuje pełną wiedzą o tym, które konkretne dane i w jaki sposób wpłynęły na daną rekomendację, co ogranicza jego zdolność do korzystania z praw podmiotów danych.
+\end{itemize}
+
+% =========================================================
+%  CZĘŚĆ II – STUDIA PRZYPADKU
+% =========================================================
+\newpage
+\section{Studia przypadku: analiza polityk prywatności}
+
+\subsection{Netflix -- platforma streamingowa}
+
+\subsubsection{Charakterystyka platformy i systemu rekomendacyjnego}
+
+Netflix jest globalną platformą streamingową działającą w modelu subskrypcyjnym, umożliwiającą dostęp do filmów, seriali, programów dokumentalnych, animacji oraz gier. Personalizacja treści stanowi jeden z fundamentalnych elementów działania platformy -- użytkownik nie korzysta z jednego, neutralnego katalogu, lecz z interfejsu dynamicznie dopasowywanego do jego profilu i historii korzystania z usługi.
+
+System rekomendacyjny Netflixa szacuje prawdopodobieństwo, że dany tytuł będzie dla użytkownika interesujący, biorąc pod uwagę historię oglądania, oceny tytułów, podobieństwo do innych użytkowników, cechy treści, porę korzystania z usługi, preferowany język, typ urządzenia oraz czas oglądania. Co istotne, personalizacja obejmuje wiele warstw interfejsu: wybór wierszy na stronie głównej, dobór tytułów w wierszu, kolejność pozycji oraz kontekst, w jakim są prezentowane. System wpływa zatem nie tylko na to, \textit{co} jest proponowane, ale również \textit{w jakiej kolejności} i \textit{w jakim otoczeniu} to się pojawia.
+
+\subsubsection{Zakres zbieranych danych osobowych}
+
+Netflix przetwarza szerokie spektrum danych osobowych, które można podzielić na kilka kategorii:
+
+\begin{enumerate}
+  \item \textbf{Dane przekazywane przez użytkownika} -- adres e-mail, numer telefonu, dane logowania, informacje o płatności, dane konfiguracyjne profilu (nazwa, ikona, preferencje językowe, lista ``Moja lista'', ustawienia napisów, blokady wiekowe, oceny treści).
+  \item \textbf{Dane zbierane automatycznie} -- zdarzenia odtwarzania (rozpoczęcie, zatrzymanie, pauza, zakończenie), historia oglądania, historia gier, wyszukiwane frazy, kliknięcia, wyświetlenia stron, czas dostępu, reakcje na tytuły, długość sesji.
+  \item \textbf{Dane urządzeń i sieci} -- identyfikatory urządzeń, adresy IP, typ urządzenia, system operacyjny, dane przeglądarki, typ połączenia, pliki cookie, identyfikatory reklamowe.
+  \item \textbf{Dane od partnerów} -- dane pozyskiwane od producentów telewizorów, dostawców Internetu, operatorów telefonii, partnerów rozliczeniowych i dostawców urządzeń streamingowych.
+  \item \textbf{Dane reklamowe} -- informacje o reklamach wyświetlanych użytkownikowi, interakcjach z reklamami, identyfikatorach urządzeń oraz dane od firm reklamowych (dotyczy planów subskrypcyjnych z reklamami).
+\end{enumerate}
+
+\subsubsection{Identyfikacja zagrożeń prywatności}
+
+Analiza przypadku Netflixa pozwala wyodrębnić kilka kluczowych zagrożeń dla prywatności użytkowników. \textbf{Stałe profilowanie behawioralne} -- analiza nie tylko jawnych ocen, ale też czasu oglądania, momentów pauzy, tempa przewijania i pory korzystania -- może tworzyć profil ujawniający pośrednio zainteresowania zdrowotne, polityczne, religijne lub emocjonalne użytkownika. Problem \textbf{nadmiernej personalizacji} polega na tym, że algorytm wzmacniający określone kategorie treści może prowadzić do zawężenia faktycznego wyboru, mimo formalnego dostępu do całego katalogu.
+
+Specyficznym ryzykiem jest \textbf{prywatność wewnątrz konta} -- profile zapewniają personalizację, ale nie zawsze pełną separację prywatności między osobami korzystającymi z jednego konta. Historyczny przypadek \textbf{Netflix Prize} \cite{narayanan2008} pozostaje modelowym przykładem ryzyka reidentyfikacji: zanonimizowana baza danych o preferencjach filmowych okazała się możliwa do powiązania z konkretnymi osobami przy pomocy zewnętrznych źródeł. Wreszcie, \textbf{wtórne wykorzystanie danych} do reklam behawioralnych i marketingu na usługach stron trzecich rodzi pytania o granice pierwotnego celu przetwarzania.
+
+\subsubsection{Ocena zgodności z RODO i zasadą privacy-by-design}
+
+\textbf{Minimalizacja danych} -- Netflix pozytywnie wyróżnia się deklaracją, że system rekomendacyjny nie wykorzystuje bezpośrednio danych demograficznych (wieku, płci) w procesie decyzyjnym. Jednocześnie zakres danych behawioralnych jest bardzo szeroki i wykracza poza to, co jest bezwarunkowo konieczne do rekomendacji treści, szczególnie w kontekście danych reklamowych i partnerskich.
+
+\textbf{Ograniczenie celu} -- podstawowym celem jest świadczenie usługi streamingowej, ale te same lub podobne dane są wykorzystywane do marketingu, reklam i integracji partnerskich. Granice między tymi celami mogą być dla użytkownika niejasne.
+
+\textbf{Przejrzystość} -- Netflix wypada stosunkowo dobrze: platforma posiada osobny artykuł wyjaśniający działanie systemu rekomendacyjnego prostym językiem. Nadal jednak użytkownik nie widzi konkretnego wyjaśnienia przy każdej rekomendacji ani pełnego profilu przypisanych mu cech.
+
+\textbf{Privacy-by-default} -- personalizacja jest domyślna i stanowi rdzeń usługi. Istnieją kontrole (profile dziecięce, blokada PIN, ukrywanie tytułów z historii), ale przeciętny użytkownik musi aktywnie ich szukać.
+
+\textbf{Prawa podmiotów danych} -- Netflix zapewnia mechanizmy dostępu, aktualizacji, usunięcia danych i pobrania kopii. Użytkownik może korzystać z ustawień prywatności, zarządzać historią oglądania i kontrolować reklamy behawioralne.
+
+\subsubsection{Rekomendacje}
+
+Na podstawie analizy można wskazać następujące kierunki poprawy zgodności z privacy-by-design: wyraźne rozdzielenie personalizacji treści od personalizacji reklam, panel kontroli profilu rekomendacyjnego z możliwością usuwania poszczególnych sygnałów, łatwiejsze resetowanie historii rekomendacyjnej, silniejsza domyślna separacja profili na kontach współdzielonych, skrócenie retencji surowych danych behawioralnych oraz stosowanie pseudonimizacji i agregacji w celach analitycznych.
+
+% ---------------------------------------------------------
+\subsection{Instagram -- platforma społecznościowa}
+% ---------------------------------------------------------
+
+\subsubsection{Charakterystyka platformy i systemu rekomendacyjnego}
+
+Instagram jest platformą społecznościową należącą do Meta Platforms, służącą do publikowania, oglądania i udostępniania zdjęć, filmów, relacji, rolek i wiadomości prywatnych. W odróżnieniu od Netflixa, gdzie rekomendacja dotyczy głównie wyboru treści rozrywkowych, system rekomendacyjny Instagrama wpływa na obieg informacji społecznej: decyduje o widoczności postów znajomych, popularności twórców, ekspozycji treści politycznych i skuteczności reklam.
+
+Platforma nie stosuje jednego algorytmu -- różne części aplikacji (\textbf{Feed}, \textbf{Stories}, \textbf{Explore}, \textbf{Reels}) posiadają własne systemy rankingowe. System analizuje wcześniejszą aktywność użytkownika, polubienia, komentarze, zapisane treści, udostępnienia, wyszukiwania, relacje z innymi kontami, historię interakcji z autorami oraz informacje o samych postach.
+
+\subsubsection{Zakres zbieranych danych osobowych}
+
+Meta przetwarza w ramach Instagrama następujące kategorie danych:
+
+\begin{enumerate}
+  \item \textbf{Dane przekazywane przez użytkownika} -- imię i nazwisko, nazwa profilu, adres e-mail, numer telefonu, zdjęcie profilowe, data urodzenia, treści publikowanych postów, relacji i rolek.
+  \item \textbf{Dane o aktywności} -- polubienia, komentarze, zapisane posty, udostępnienia, obejrzane rolki, czas oglądania, wyszukiwania, kliknięcia w profile, reakcje na Stories, tempo przewijania, ukrywanie treści, obserwowanie kont.
+  \item \textbf{Dane o relacjach społecznych} -- lista obserwowanych i obserwujących, częstotliwość kontaktu z konkretnymi osobami, oznaczenia, wiadomości.
+  \item \textbf{Dane techniczne i lokalizacyjne} -- urządzenie, system operacyjny, adres IP, pliki cookie, identyfikatory urządzeń, język, strefa czasowa, parametry sieci.
+  \item \textbf{Dane reklamowe i dane spoza platformy} -- dane od reklamodawców, partnerów biznesowych, właścicieli stron korzystających z narzędzi Meta (piksela Meta, SDK).
+  \item \textbf{Dane z funkcji AI} -- interakcje użytkowników z funkcjami generatywnej AI mogą być wykorzystywane do personalizacji treści i reklam na platformach Meta.
+\end{enumerate}
+
+\subsubsection{Identyfikacja zagrożeń prywatności}
+
+Instagram generuje szczególnie rozbudowany katalog zagrożeń prywatności. \textbf{Inferencja danych wrażliwych} -- regularne przeglądanie treści dotyczących zdrowia, polityki, religii lub seksualności może prowadzić do wnioskowania o danych szczególnie chronionych w rozumieniu art.~9 RODO, nawet jeśli użytkownik nigdy ich wprost nie ujawnił. \textbf{Nadmierna personalizacja i bańka informacyjna} -- stopniowe wzmacnianie treści podobnych do dotychczasowych interakcji może ograniczać ekspozycję na odmienne poglądy i informacje; w kontekście platformy społecznościowej skutki są poważniejsze niż przy wyborze filmów. \textbf{Manipulacja uwagą i dark patterns} -- system optymalizowany pod kątem zaangażowania rodzi pytania o autonomię użytkownika; w 2025~r.\ holenderski sąd nakazał Meta zmianę domyślnych ustawień osi czasu Facebooka i Instagrama. \textbf{Wtórne wykorzystanie danych} -- dane o aktywności wpływają jednocześnie na rekomendacje treści, personalizację reklam, analizę skuteczności kampanii i ulepszanie modeli AI. \textbf{Wpływ na małoletnich} -- nastolatkowie są szczególnie podatni na treści dotyczące wyglądu, popularności i zdrowia psychicznego.
+
+W 2026~r.\ irlandzki regulator medialny wszczął postępowania dotyczące manipulacji algorytmicznymi feedami, a Komisja Europejska wstępnie stwierdziła, że Meta narusza DSA przez brak skutecznych mechanizmów zapobiegania dostępowi dzieci poniżej 13. roku życia do Instagrama i Facebooka.
+
+\subsubsection{Ocena zgodności z RODO i zasadą privacy-by-design}
+
+\textbf{Minimalizacja danych} -- zakres przetwarzanych danych jest bardzo szeroki, szczególnie w obszarze danych behawioralnych i reklamowych. Dane z aktywności w Instagramie mogą łączyć się z danymi z innych produktów Meta, co znacznie rozbudowuje profil użytkownika.
+
+\textbf{Ograniczenie celu} -- cele przetwarzania obejmują świadczenie usługi, personalizację treści, reklamy, bezpieczeństwo, analitykę, rozwój produktów i integrację z innymi usługami Meta. Te same dane mogą jednocześnie służyć wielu celom, co utrudnia weryfikację zgodności z zasadą ograniczenia celu.
+
+\textbf{Przejrzystość} -- Instagram publikuje ogólne wyjaśnienia działania rankingów. Brak jednak szczegółowych, kontekstowych wyjaśnień przy konkretnych rekomendacjach. Ustawienia prywatności są rozproszone w różnych panelach.
+
+\textbf{Privacy-by-default} -- personalizacja jest domyślna. Dostępne są mechanizmy kontroli (reset sugerowanych treści, ustawienia wrażliwych treści, konta nastoletnie), ale ich znalezienie wymaga aktywnych działań użytkownika.
+
+\textbf{DSA} -- jako bardzo duża platforma, Instagram podlega szczegółowym wymogom DSA dotyczącym przejrzystości systemów rekomendacyjnych i oferowania opcji feedu nieopartego na profilowaniu.
+
+\subsubsection{Rekomendacje}
+
+Analiza sugeruje następujące kierunki poprawy: wyraźne rozdzielenie rekomendacji treści od personalizacji reklam, panel profilu rekomendacyjnego z możliwością usuwania przypisanych kategorii zainteresowań, łatwy i trwały wybór feedu nieopartego na profilowaniu, kontekstowe wyjaśnienia ``dlaczego to widzę?'', ograniczenie retencji szczegółowych danych behawioralnych, silniejsza ochrona przed inferencją danych wrażliwych, domyślnie bezpieczniejsze ustawienia dla małoletnich oraz niezależne audyty systemów rekomendacyjnych.
+
+% ---------------------------------------------------------
+\subsection{Amazon -- platforma e-commerce}
+% ---------------------------------------------------------
+
+\subsubsection{Charakterystyka platformy i systemu rekomendacyjnego}
+
+Amazon jest jedną z największych platform e-commerce na świecie i pionierem stosowania systemów rekomendacyjnych w handlu elektronicznym. Według powszechnie cytowanych szacunków rekomendacje odpowiadają za około 35\% zakupów dokonywanych na platformie. Stosowane przez Amazon rozwiązanie oparte na filtrowaniu kolaboratywnym zorientowanym na przedmioty (\textit{item-to-item collaborative filtering}) stało się wzorcem dla całej branży.
+
+Amazon wdraża mechanizmy rekomendacyjne w wielu punktach styku z użytkownikiem: na stronie głównej, na kartach produktów, w procesie zakupu, w wiadomościach e-mail oraz w sekcji ``Klienci, którzy kupili ten produkt, kupili również''. Do obsługi silników personalizacji służy m.in.\ Amazon Personalize -- własna platforma dostępna w ramach AWS. System zasilany jest danymi ze wszystkich obszarów ekosystemu Amazona: platformy zakupowej, urządzeń Kindle, serwisu Prime Video, asystenta głosowego Alexa oraz -- dla posiadaczy kart lojalnościowych -- sieci sklepów Whole Foods.
+
+\subsubsection{Zakres zbieranych danych osobowych}
+
+Amazon gromadzi dane w trzech zasadniczych kategoriach:
+
+\begin{enumerate}
+  \item \textbf{Dane przekazywane przez użytkownika} -- imię i nazwisko, adres, numery telefonów, informacje płatnicze, wiek, dane logowania, zdjęcia profilowe, nagrania głosowe (asystent Alexa i urządzenia Echo).
+  \item \textbf{Dane zbierane automatycznie} -- adres IP, historia wyszukiwań, historia przeglądania kart produktów, historia zakupów, czas spędzony na stronach, liczba i czas sesji streamingowych, dane o interakcjach (kliknięcia, przewijanie, najechania kursorem), dane urządzenia, lokalizacja geograficzna.
+  \item \textbf{Dane z zewnętrznych źródeł} -- zaktualizowane informacje adresowe od firm kurierskich, dane o interakcjach z partnerami handlowymi, informacje z biur informacji kredytowej.
+\end{enumerate}
+
+Amazon wprost deklaruje, że dane osobowe są wykorzystywane do rekomendowania funkcji, produktów i usług potencjalnie interesujących użytkownika oraz do personalizowania doświadczenia. Zakres gromadzonych informacji czyni Amazon jednym z podmiotów o najintensywniejszym profilowaniu użytkowników na rynku cyfrowym.
+
+\subsubsection{Identyfikacja zagrożeń prywatności}
+
+Analiza Amazona w kontekście opisanej taksonomii zagrożeń \cite{chen2025} wskazuje trzy główne kategorie. \textbf{Poczucie bycia obserwowanym} -- Amazon zbiera dane jednocześnie z wielu niezależnych źródeł (platforma zakupowa, reklamy na stronach partnerskich korzystających z Amazon Advertising, historia głosowa z Alexy, zachowania w sklepach Whole Foods), co może prowadzić do rekomendacji sprawiających wrażenie, że platforma ``zna'' potrzeby użytkownika zanim on sam je uświadomi.
+
+\textbf{Zagrożenie kradzieżą tożsamości} -- Amazon przetwarza dane wrażliwe: numery kart kredytowych, adresy zamieszkania, dane rozliczeń finansowych, a w przypadku sprzedawców -- numery identyfikacji podatkowej i informacje bankowe. Połączenie danych identyfikacyjnych z danymi behawioralnymi tworzy pełny profil osoby, który w razie naruszenia bezpieczeństwa może być użyty do popełnienia przestępstw.
+
+\textbf{Nieuprawnione wtórne wykorzystanie danych} -- dane zakupowe mogą być przekazywane firmom analitycznym, agencjom reklamowym i partnerom płatności. Platforma Amazon DSP (\textit{Demand-Side Platform}) umożliwia wyświetlanie reklam opartych na historii zachowań na Amazonie na tysiącach innych witryn -- model \textit{cross-site behavioral advertising} powoduje, że dane zebrane w celach transakcyjnych są intensywnie wykorzystywane w odmiennych kontekstach.
+
+\subsubsection{Ocena zgodności z RODO i zasadą privacy-by-design}
+
+\textbf{Minimalizacja danych} -- zakres gromadzonych informacji, obejmujący dane głosowe, aktywność w sklepach stacjonarnych i historię przeglądania stron partnerskich, znacznie wykracza poza to, co byłoby niezbędne do realizacji transakcji zakupowej. Jest to najpoważniejsze uchybienie Amazona względem zasad RODO.
+
+\textbf{Ograniczenie celu} -- praktyka udostępniania danych behawioralnych partnerom reklamowym przez Amazon DSP budzi istotne wątpliwości co do zgodności z art.~5 ust.~1 lit.~b RODO, szczególnie z perspektywy użytkownika dokonującego zakupu.
+
+\textbf{Przejrzystość} -- polityka prywatności jest szczegółowa i dostępna publicznie, jednak jej objętość i poziom skomplikowania sprawiają, że przeciętny użytkownik nie jest w stanie zrozumieć pełnego zakresu operacji przetwarzania.
+
+\textbf{Privacy-by-default} -- użytkownik, który nie podejmie aktywnych działań (zarządzanie preferencjami reklam w sekcji ``Your Ads Privacy Choices'', konfiguracja ustawień konta), automatycznie podlega pełnemu zakresowi personalizacji i profilowania. Domyślna konfiguracja odpowiada maksymalizacji przetwarzania, nie jego minimalizacji.
+
+\textbf{Bezpieczeństwo techniczne} -- w tym obszarze Amazon prezentuje wysoki poziom dojrzałości: certyfikacja PCI DSS, szyfrowanie danych w chmurze AWS, wielostopniowe mechanizmy uwierzytelniania. Zaawansowanie techniczne w zakresie bezpieczeństwa nie jest jednak równoznaczne z wdrożeniem privacy-by-design.
+
+\subsubsection{Kontekst regulacyjny}
+
+W 2021~r.\ luksemburska Komisja Ochrony Danych nałożyła na Amazon karę za przetwarzanie danych do celów reklamy behawioralnej w sposób uznany za niezgodny z RODO. W marcu 2026~r.\ luksemburski sąd uchylił nałożoną karę i skierował sprawę do ponownej oceny, jednak samo postępowanie ilustruje, że praktyki profilowania Amazona budziły poważne wątpliwości organów nadzorczych.
+
+% =========================================================
+%  CZĘŚĆ III – PORÓWNANIE
+% =========================================================
+\newpage
+\section{Porównanie polityk prywatności: Netflix, Instagram, Amazon}
+
+\subsection{Cel i zakres porównania}
+
+Celem niniejszej części jest zestawienie wszystkich trzech platform pod kątem kluczowych kryteriów ochrony prywatności: minimalizacji danych, ograniczenia celu, przejrzystości, privacy-by-default, bezpieczeństwa technicznego oraz ogólnego poziomu ryzyka. Platforma streamingowa, społecznościowa i e-commerce reprezentują trzy odmienne modele biznesowe, co wpływa na charakter i zakres przetwarzania danych, a tym samym na naturę i intensywność zagrożeń dla prywatności.
+
+\subsection{Syntetyczne zestawienie porównawcze}
+
+\begin{longtable}{>{\bfseries\small}p{3.4cm}
+                  >{\small\raggedright}p{3.4cm}
+                  >{\small\raggedright}p{3.4cm}
+                  >{\small\raggedright\arraybackslash}p{3.4cm}}
+  \toprule
+  \rowcolor{headerblue}
+  \textcolor{white}{Kryterium} &
+  \textcolor{white}{Netflix} &
+  \textcolor{white}{Instagram / Meta} &
+  \textcolor{white}{Amazon} \\
+  \midrule
+  \endfirsthead
+  \toprule
+  \rowcolor{headerblue}
+  \textcolor{white}{Kryterium} &
+  \textcolor{white}{Netflix} &
+  \textcolor{white}{Instagram / Meta} &
+  \textcolor{white}{Amazon} \\
+  \midrule
+  \endhead
+  \bottomrule
+  \endfoot
+
+  \rowcolor{lightblue}
+  Typ platformy &
+  Streamingowa (subskrypcja) &
+  Społecznościowa (reklamy) &
+  E-commerce i ekosystem usług \\
+
+  Główne dane do rekomendacji &
+  Historia oglądania, oceny, czas oglądania, urządzenie &
+  Aktywność w aplikacji, relacje społeczne, dane z produktów Meta &
+  Historia zakupów, przeglądania, wyszukiwań, dane z całego ekosystemu \\
+
+  \rowcolor{lightblue}
+  Minimalizacja danych &
+  Umiarkowane ryzyko -- zakres uzasadniony streaming, problematyczny przy reklamach &
+  Wysokie ryzyko -- bardzo szeroki zakres, łączenie danych między usługami Meta &
+  Najwyższe ryzyko -- dane głosowe, sklepowe, partnerskie wykraczają poza cel zakupowy \\
+
+  Ograniczenie celu &
+  Ryzyko głównie przy reklamach behawioralnych i partnerach &
+  Wysokie ryzyko -- cel rekomendacji miesza się z celami reklamowymi i analizą AI &
+  Wysokie ryzyko -- dane zakupowe intensywnie wykorzystywane do reklamy cross-site (DSP) \\
+
+  \rowcolor{lightblue}
+  Przejrzystość &
+  Lepsza -- osobny artykuł o zasadach działania rekomendacji &
+  Ogólna -- wyjaśnione istnienie różnych systemów, brak kontekstowych wyjaśnień &
+  Ograniczona -- polityka szczegółowa, ale ekosystem zbyt złożony dla przeciętnego użytkownika \\
+
+  Privacy-by-default &
+  Częściowo -- personalizacja domyślna, ale istnieją kontrole &
+  Problematyczne -- personalizacja domyślna, opcje trudno dostępne &
+  Najbardziej problematyczne -- domyślna konfiguracja maksymalizuje profilowanie \\
+
+  \rowcolor{lightblue}
+  Bezpieczeństwo techniczne &
+  Dobre -- zarządzanie urządzeniami, PIN, szyfrowanie &
+  Dobre -- weryfikacja logowań, mechanizmy zgłaszania naruszeń &
+  Bardzo dobre -- PCI DSS, AWS, szyfrowanie end-to-end, uwierzytelnianie wieloskładnikowe \\
+
+  Profilowanie behawioralne &
+  Wysokie w zakresie gustów oglądania &
+  Bardzo wysokie -- obejmuje sieć społeczną, emocje, zainteresowania &
+  Bardzo wysokie -- obejmuje zachowania zakupowe, finansowe, głosowe, fizyczne \\
+
+  \rowcolor{lightblue}
+  Ryzyko inferencji danych wrażliwych &
+  Średnie -- historia oglądania może ujawniać cechy szczególne &
+  Wysokie -- aktywność w aplikacji może ujawniać zdrowie, poglądy, seksualność &
+  Wysokie -- profil zakupowy może ujawniać stan zdrowia, sytuację finansową, przekonania \\
+
+  Wpływ na użytkownika &
+  Wybór treści, czas korzystania z platformy &
+  Obieg informacji, zdrowie psychiczne, poglądy, relacje &
+  Decyzje zakupowe, wydatki, ekspozycja na reklamy poza platformą \\
+
+  \rowcolor{lightblue}
+  Kontekst regulacyjny &
+  RODO; postępowania dotyczące reklam &
+  RODO, DSA; postępowania dot.\ manipulacji feedem i ochrony małoletnich &
+  RODO; postępowanie CNPD i wyrok sądu w 2026~r.\ \\
+
+  Ogólna ocena ryzyka &
+  Średnie do wysokiego &
+  Wysokie &
+  Wysokie do bardzo wysokiego \\
+\end{longtable}
+
+\subsection{Analiza porównawcza według kryteriów RODO}
+
+\subsubsection{Minimalizacja danych}
+
+Spośród trzech platform najlepiej z zasadą minimalizacji radzi sobie Netflix -- zakres zbieranych danych jest szeroki, ale przynajmniej jego rdzeń (historia oglądania, oceny, profil) jest bezpośrednio powiązany z główną funkcją usługi. Zakres danych Amazona stanowi najpoważniejsze wyzwanie: dane głosowe zbierane przez Alexę, zachowania w sklepach Whole Foods, historia przeglądania na stronach partnerskich -- wszystkie te elementy wykraczają daleko poza to, co byłoby niezbędne do realizacji transakcji zakupowej. Instagram zajmuje pozycję pośrednią, choć szczególnie problematyczna jest możliwość łączenia danych z wielu produktów Meta i wzbogacania profilu o aktywność użytkownika poza samą aplikacją.
+
+\subsubsection{Ograniczenie celu}
+
+We wszystkich trzech przypadkach obserwujemy to samo systemowe zjawisko: dane zbierane pierwotnie do określonego celu (streaming, interakcja społecznościowa, zakup) są intensywnie wykorzystywane do celów reklamowych. Amazon jest pod tym względem najbardziej problematyczny ze względu na Amazon DSP i skalę reklamy behawioralnej poza platformą. Instagram jest trudny do oceny ze względu na wielość równoległych celów: te same dane o aktywności mogą jednocześnie napędzać rekomendacje Reels, personalizację reklam, ulepszanie modeli AI i pomiar skuteczności kampanii reklamodawców. Netflix, dzięki subskrypcyjnemu modelowi biznesowemu, ma mniejszy bezwzględny imperatyw do wtórnego wykorzystania danych, choć rozwój planów reklamowych zmienia tę sytuację.
+
+\subsubsection{Przejrzystość}
+
+Netflix wyróżnia się pozytywnie: platforma w sposób dostępny dla laika opisuje podstawowe zasady działania systemu rekomendacyjnego. Instagram informuje o istnieniu różnych systemów rankingowych, ale brakuje kontekstowych, indywidualnych wyjaśnień. Amazon jest najmniej przejrzysty w praktycznym wymiarze -- polityka prywatności jest formalnie kompletna, ale złożoność ekosystemu (AWS, Alexa, Prime Video, Whole Foods, partnerzy reklamowi, sprzedawcy zewnętrzni) sprawia, że przeciętny użytkownik nie jest w stanie zrozumieć, jak i w jakim celu jego dane są łączone. Przejrzystość realizowana wyłącznie na poziomie dokumentu prawnego nie przekłada się automatycznie na przejrzystość funkcjonalną z perspektywy użytkownika \cite{chen2025}.
+
+\subsubsection{Privacy-by-default}
+
+Żadna z analizowanych platform nie spełnia w pełni wymagań art.~25 ust.~2 RODO, choć poziom uchybień jest zróżnicowany. Netflix i Instagram traktują szeroko zakrojoną personalizację jako podstawową cechę usługi, co jest biznesowo racjonalne, ale oznacza, że użytkownik od pierwszego logowania podlega intensywnemu profilowaniu. Amazon jest najbardziej odległy od ideału privacy-by-default -- domyślna konfiguracja konta automatycznie włącza reklamę behawioralną, profilowanie wielokanałowe i udostępnianie danych partnerom. Szczególnie istotna jest różnica między dostępnością narzędzi kontroli a ich domyślnymi ustawieniami: wszystkie trzy platformy oferują mechanizmy ograniczania przetwarzania, ale żadna nie uczyniła ochrony prywatności domyślnym stanem systemu.
+
+\subsubsection{Bezpieczeństwo techniczne}
+
+Pod względem bezpieczeństwa technicznego najbardziej dojrzały jest Amazon -- certyfikacja PCI DSS, szyfrowanie w chmurze AWS i wielostopniowe uwierzytelnianie odzwierciedlają poważne podejście do ochrony danych finansowych i transakcyjnych. Netflix i Instagram również stosują zaawansowane mechanizmy bezpieczeństwa, dostosowane do specyfiki swoich usług. Należy jednak podkreślić, że bezpieczeństwo techniczne jest warunkiem koniecznym, ale nie wystarczającym dla zgodności z privacy-by-design: system może doskonale chronić dane przed nieautoryzowanym dostępem, a jednocześnie zbierać nadmierny ich zakres lub używać ich do celów sprzecznych z oczekiwaniami użytkowników.
+
+\subsection{Przekrojowe wnioski z analizy porównawczej}
+
+Porównanie trzech platform ujawnia kilka istotnych prawidłowości. Po pierwsze, \textbf{model biznesowy determinuje intensywność zagrożeń prywatności}: platforma finansowana z reklam (Instagram) ma strukturalną zachętę do zbierania możliwie dużo danych o zainteresowaniach i zachowaniach użytkowników; platforma e-commerce (Amazon) łączy dane transakcyjne, behawioralne i lokalizacyjne, tworząc profile o bezprecedensowej głębokości; platforma subskrypcyjna (Netflix) ma nieco mniejszą bezpośrednią zachętę do ekstensywnego profilowania, choć rozwój planów reklamowych zmienia tę dynamikę.
+
+Po drugie, \textbf{skala ekosystemu potęguje ryzyko}: Amazon i Instagram działają jako węzły rozległych ekosystemów (odpowiednio AWS/Alexa/Whole Foods i Meta/Facebook/Messenger), co oznacza, że dane użytkownika są łączone z danymi z wielu niezależnych punktów styku. Netflix jest pod tym względem relatywnie bardziej ograniczony.
+
+Po trzecie, \textbf{wpływ rekomendacji na użytkownika rośnie wraz ze znaczeniem domeny}: rekomendacje filmów wpływają na czas wolny; rekomendacje na platformie społecznościowej wpływają na obraz świata, relacje i zdrowie psychiczne; rekomendacje zakupowe wpływają bezpośrednio na decyzje finansowe. Ocena ryzyka prywatności powinna uwzględniać nie tylko zakres przetwarzania, ale też konsekwencje, jakie to przetwarzanie niesie dla życia użytkownika.
+
+% =========================================================
+%  CZĘŚĆ IV – WNIOSKI
+% =========================================================
+\newpage
+\section{Wnioski końcowe}
+
+\subsection{Systemowe napięcie między personalizacją a ochroną prywatności}
+
+Przeprowadzone analizy potwierdzają tezę, którą można sformułować jako fundamentalne napięcie: \textbf{ekonomiczna logika nowoczesnych systemów rekomendacyjnych AIRS jest strukturalnie sprzeczna z podstawowymi zasadami ochrony danych osobowych}. Im więcej danych o użytkowniku system posiada, tym skuteczniej może przewidywać jego preferencje, wydłużać czas spędzany na platformie, zwiększać wskaźniki konwersji i podnosić wartość reklam. Tymczasem zasady minimalizacji danych, ograniczenia celu i domyślnej ochrony prywatności zmierzają w dokładnie przeciwnym kierunku -- ku ograniczeniu zakresu przetwarzania i jego celów.
+
+To napięcie nie jest możliwe do całkowitego usunięcia: pewien poziom profilowania jest inherentny dla jakiegokolwiek systemu rekomendacyjnego. Problemem jest nie samo profilowanie, lecz jego zakres, przejrzystość, kontrolowalność przez użytkownika i powiązanie z wtórnymi celami reklamowymi i analitycznymi, które wykraczają poza pierwotną funkcję usługi.
+
+\subsection{Privacy-by-design jako wymóg systemowy, nie deklaratywny}
+
+Kluczowy wniosek z porównania wszystkich trzech platform brzmi: \textbf{privacy-by-design nie może być rozumiane jako zestaw zabezpieczeń technicznych dodawanych do gotowego systemu ani jako deklaracja zamieszczana w polityce prywatności}. Musi stanowić zasadę organizującą cały cykl życia systemu -- od wyboru architektury przetwarzania, przez dobór sygnałów używanych przez algorytm, po projektowanie interfejsu użytkownika i domyślnych ustawień.
+
+W praktyce żadna z analizowanych platform nie spełnia w pełni tego ideału. Netflix jest w tej stawce relatywnie najlepszy -- jego polityka prywatności i dokumentacja systemu rekomendacyjnego są przejrzyste, a zakres danych jest przynajmniej częściowo powiązany z podstawową funkcją usługi. Amazon i Instagram mają poważniejsze uchybienia: w obu przypadkach domyślne ustawienia maksymalizują profilowanie, zakres danych wykracza daleko poza to, co jest niezbędne, a przepływ danych między różnymi usługami i partnerami jest trudny do pełnego zrozumienia przez użytkownika.
+
+\subsection{Prawa podmiotów danych w erze AIRS}
+
+Analiza pokazuje, że formalna dostępność mechanizmów realizacji praw podmiotów danych (dostęp, sprostowanie, usunięcie, sprzeciw) nie jest równoznaczna z realną możliwością korzystania z tych praw w kontekście systemów rekomendacyjnych. Użytkownik, który chce zrozumieć, dlaczego widzi konkretne rekomendacje, rzadko dysponuje pełną informacją o tym, jakie cechy profilu mu przypisano i jakie wagi mają poszczególne sygnały. Prawo do niepodlegania zautomatyzowanemu profilowaniu (art.~22 RODO) jest trudne do wyegzekwowania, gdy profilowanie jest wbudowane w podstawowy mechanizm działania usługi, a nie jedynie opcjonalną, wyraźnie oddzieloną funkcją.
+
+Konieczne jest zatem nie tylko formalne zapewnienie możliwości skorzystania z praw podmiotów danych, ale też \textbf{projektowanie systemów, które czynią te prawa realnie dostępnymi}: panel wyjaśnień algorytmicznych, łatwa modyfikacja i resetowanie profilu rekomendacyjnego, proste i trwałe mechanizmy wyboru feedu nieopartego na profilowaniu.
+
+\subsection{Rola regulacji: RODO, DSA i przyszłe wyzwania}
+
+Badane przypadki ilustrują zarówno siłę, jak i ograniczenia obowiązujących ram regulacyjnych. RODO ustanawia ważne zasady i prawa, ale ich egzekwowanie wobec bardzo dużych platform jest procesem długotrwałym i kosztownym -- postępowanie wobec Amazona w Luksemburgu toczyło się przez pięć lat i zakończyło uchyleniem kary przez sąd. DSA stanowi uzupełnienie RODO w zakresie przejrzystości systemów rekomendacyjnych, ale jego praktyczne stosowanie wobec platform takich jak Meta (Instagram) jest wciąż w fazie kształtowania się.
+
+Nowe wyzwania regulacyjne przyniosą: integracja funkcji generatywnej AI z systemami rekomendacyjnymi (przypadek Meta AI w Instagramie), wzrastające możliwości łączenia danych z różnych ekosystemów, rekomendacje oparte na danych biometrycznych i emocjonalnych, oraz rosnąca złożoność łańcuchów przetwarzania danych obejmujących wielu podwykonawców.
+
+\subsection{Konkluzja: ku odpowiedzialnemu projektowaniu systemów AI}
+
+Opierając się na przeprowadzonych analizach, można sformułować kilka zasad \textbf{odpowiedzialnego projektowania systemów rekomendacyjnych}:
+
+\begin{enumerate}
+  \item \textbf{Zasada proporcjonalności danych}: zakres danych wejściowych systemu powinien być ograniczony do tego, co jest rzeczywiście konieczne do realizacji funkcji rekomendacji, a nie do tego, co jest dostępne i technicznie możliwe do przetworzenia.
+  \item \textbf{Zasada separacji celów}: dane używane do rekomendacji treści powinny być wyraźnie oddzielone od danych używanych do reklamy, analityki i celów wtórnych, a użytkownik powinien dysponować oddzielnymi kontrolami dla każdego z tych obszarów.
+  \item \textbf{Zasada wyjaśnialności}: użytkownik powinien mieć dostęp do zrozumiałego wyjaśnienia, dlaczego widzi konkretne rekomendacje, jakie cechy profilu mu przypisano i jak może je zmodyfikować.
+  \item \textbf{Zasada domyślnej minimalizacji}: system powinien być skonfigurowany tak, aby w stanie domyślnym przetwarzać możliwie najmniej danych, a rozszerzenie zakresu personalizacji powinno wymagać świadomej i prostej decyzji użytkownika.
+  \item \textbf{Zasada ograniczonej retencji}: szczegółowe dane behawioralne powinny być przechowywane tylko tak długo, jak jest to rzeczywiście konieczne dla działania usługi i bezpieczeństwa, po czym powinny być agregowane, pseudonimizowane lub usuwane.
+  \item \textbf{Zasada autonomii użytkownika}: projektowanie interfejsu powinno aktywnie wspierać, a nie utrudniać, korzystanie z mniej spersonalizowanych trybów działania; wybory prywatności powinny być pamiętane i respektowane, a dark patterns eliminowane.
+\end{enumerate}
+
+Wdrożenie tych zasad wymaga nie tylko dobrej woli platform, ale przede wszystkim egzekwowalnych regulacji prawnych, aktywnych organów nadzorczych, niezależnych audytów algorytmicznych i świadomości użytkowników co do mechanizmów, które codziennie kształtują ich cyfrowe doświadczenie.
+
+% =========================================================
+%  BIBLIOGRAFIA
+% =========================================================
+\newpage
+\section*{Bibliografia}
+\addcontentsline{toc}{section}{Bibliografia}
+
+\begin{thebibliography}{99}
+
+\bibitem{chen2025}
+Chen, T., Liu, F., Shen, X.-L., Wu, J., Liu, Y. (2025). Conceptualization of privacy concerns and their influence on consumers' resistance to AI-based recommender systems in e-commerce. \textit{Industrial Management \& Data Systems}, 125(5), 1844--1868.
+
+\bibitem{himeur2022}
+Himeur, Y., Sohail, S.S., Bensaali, F., Amira, A., Alazab, M. (2022). Latest trends of security and privacy in recommender systems: A comprehensive review and future perspectives. \textit{Computers \& Security}, 118, 102746.
+
+\bibitem{narayanan2008}
+Narayanan, A., Shmatikov, V. (2008). Robust De-anonymization of Large Sparse Datasets. \textit{IEEE Symposium on Security and Privacy 2008}. \url{https://www.cs.cornell.edu/~shmat/shmat_oak08netflix.pdf}
+
+\bibitem{rodo}
+Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r. (RODO/GDPR). \url{https://eur-lex.europa.eu/eli/reg/2016/679/oj}
+
+\bibitem{dsa}
+Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2022/2065 z dnia 19 października 2022 r. (DSA -- Akt o Usługach Cyfrowych). \url{https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX\%3A32022R2065}
+
+\bibitem{edpb2019}
+European Data Protection Board. \textit{Guidelines 4/2019 on Article 25 Data Protection by Design and by Default} (wersja 2.0, 2019). \url{https://www.edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-42019-article-25-data-protection-design-and_en}
+
+\bibitem{netflix_privacy}
+Netflix. \textit{Privacy Statement}. \url{https://help.netflix.com/legal/privacy}
+
+\bibitem{netflix_recs}
+Netflix Help Center. \textit{How Netflix's Recommendations System Works}. \url{https://help.netflix.com/en/node/100639}
+
+\bibitem{netflix_data}
+Netflix Help Center. \textit{What personal information Netflix holds about you}. \url{https://help.netflix.com/en/node/100624}
+
+\bibitem{netflix_stop}
+Netflix Help Center. \textit{How to stop certain uses of your personal information}. \url{https://help.netflix.com/en/node/100637}
+
+\bibitem{netflix_transfer}
+Netflix Help Center. \textit{Profile transfers}. \url{https://help.netflix.com/en/node/122698}
+
+\bibitem{netflix_research}
+Netflix Research. \textit{Personalization, Recommendations and Search}. \url{https://research.netflix.com/research-area/recommendations}
+
+\bibitem{ig_ranking}
+Instagram. \textit{Instagram Ranking Explained | How Our Algorithm Works}. \url{https://about.instagram.com/blog/announcements/instagram-ranking-explained}
+
+\bibitem{ig_creators}
+Instagram Creators. \textit{Understand how Instagram algorithms work}. \url{https://creators.instagram.com/grow/algorithms-and-ranking}
+
+\bibitem{ig_recs}
+Instagram Help Center. \textit{Recommendations on Instagram}. \url{https://help.instagram.com/313829416281232}
+
+\bibitem{ig_reset}
+Instagram Help Center. \textit{Reset your suggested content}. \url{https://help.instagram.com/556617736965724/}
+
+\bibitem{meta_privacy}
+Meta. \textit{Privacy Policy}. \url{https://www.facebook.com/privacy/policy/}
+
+\bibitem{meta_ai}
+Meta. \textit{Improving Your Recommendations on Our Apps With AI at Meta} (2025). \url{https://about.fb.com/news/2025/10/improving-your-recommendations-apps-ai-meta/}
+
+\bibitem{meta_teen}
+Meta. \textit{Instagram Expands Teen Accounts} (2026). \url{https://about.fb.com/news/2026/04/instagram-expands-teen-accounts-inspired-by-13-content-ratings/}
+
+\bibitem{ec_dsa}
+European Commission. \textit{Digital Services Act -- user rights}. \url{https://digital-strategy.ec.europa.eu/en/factpages/user-rights-under-digital-services-act}
+
+\bibitem{reuters_nl}
+Reuters. \textit{Dutch court orders Meta to change Facebook and Instagram timeline settings} (2025). \url{https://www.reuters.com/technology/dutch-court-orders-meta-change-facebook-instagram-timeline-settings-2025-10-02/}
+
+\bibitem{reuters_ie}
+Reuters. \textit{Ireland probes Meta's Instagram, Facebook over EU manipulation concerns} (2026). \url{https://www.reuters.com/legal/litigation/ireland-probles-metas-instagram-facebook-over-eu-manipulation-concerns-2026-05-05/}
+
+\bibitem{ec_meta_dsa}
+European Commission. \textit{Commission preliminarily finds Meta in breach of Digital Services Act} (2026). \url{https://ec.europa.eu/commission/presscorner/detail/en/ip_26_920}
+
+\bibitem{amazon_privacy}
+Amazon. \textit{Amazon.com Privacy Notice}. \url{https://www.amazon.com/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ}
+
+\bibitem{amazon_dsp}
+Amazon Ads. \textit{Amazon DSP}. \url{https://advertising.amazon.com/solutions/products/amazon-dsp}
+
+\end{thebibliography}
+
+\end{document}
